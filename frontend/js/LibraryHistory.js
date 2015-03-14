@@ -48,7 +48,7 @@ var LibraryHistory = React.createClass({
                 unknownGroup.push(post);
             } else {
                 var key = getDateHeader(post);
-                if (key != lastKey) {
+                if (key !== lastKey) {
                     if (group)
                         groups.push({key: lastKey, items: group});
                     lastKey = key;

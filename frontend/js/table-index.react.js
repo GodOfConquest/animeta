@@ -22,9 +22,9 @@ var Nav = React.createClass({
         var tabs = [];
         for (var i = 0; i < WEEKDAYS.length; i++) {
             tabs.push(
-                <span className={'tab' + (i == this.props.focusedIndex ? ' active' : '')}
+                <span className={'tab' + (i === this.props.focusedIndex ? ' active' : '')}
                         key={'tab' + i}
-                        onClick={(i => this.props.onDaySelect(i)).bind(null, i)}>
+                        onClick={this.props.onDaySelect.bind(null, i)}>
                     {WEEKDAYS[i]}
                 </span>
             );
@@ -129,7 +129,7 @@ var Schedule = React.createClass({
                             preferKR={this.state.preferKR} onCountrySelect={this.handleCountrySelect} />
                     </PositionSticky>
                     <div className="schedule-content" ref="content">
-                    {groups.map(group => 
+                    {groups.map(group =>
                         <div className="schedule-day" ref={'group' + group.index}>
                             {group.items.map(item => <Item key={item.id} item={item} />)}
                         </div>
@@ -153,7 +153,7 @@ var Schedule = React.createClass({
     },
 
     handleCountrySelect(country) {
-        this.setState({preferKR: country == 'KR'}, () => {
+        this.setState({preferKR: country === 'KR'}, () => {
             this.handleDaySelect(this.state.focusedIndex);
             window.localStorage['animeta.table.preferKR'] = this.state.preferKR;
         });
@@ -166,7 +166,7 @@ var Schedule = React.createClass({
         for (var i = WEEKDAYS.length - 1; i >= 0; i--) {
             var $group = $(this.refs['group' + i].getDOMNode());
             if ($group.position().top <= contentOffset) {
-                if (this.state.focusedIndex != i) {
+                if (this.state.focusedIndex !== i) {
                     this.setState({focusedIndex: i});
                 }
                 return;

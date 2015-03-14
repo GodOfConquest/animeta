@@ -15,7 +15,7 @@ var App = React.createClass({
 
     render() {
         var user = PreloadData.owner;
-        var canEdit = PreloadData.current_user && PreloadData.current_user.id == user.id;
+        var canEdit = PreloadData.current_user && PreloadData.current_user.id === user.id;
         var key = this.getParams().recordId;
         return <div>
             <GlobalHeader currentUser={PreloadData.current_user} />
@@ -48,7 +48,7 @@ function onPageTransition() {
     initialLoad = false;
 }
 
-var supportsHistory = require('react-router/utils/supportsHistory');
+var supportsHistory = require('react-router/modules/utils/supportsHistory');
 
 function runApp() {
     var locationStrategy = Router.HistoryLocation;
@@ -57,7 +57,7 @@ function runApp() {
         // TODO: handle URL coming from hash location
         // in history supported environment.
         var path = location.pathname;
-        if (path != libraryPath) {
+        if (path !== libraryPath) {
             // /records/add/ -> /users/owner/#/records/add/
             // /records/12345/ -> /users/owner/#/records/12345/
             // /users/owner/history/ -> /users/owner/#/history/

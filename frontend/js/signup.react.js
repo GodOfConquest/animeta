@@ -81,11 +81,11 @@ var App = React.createClass({
             this.state.username.match(/^[A-Za-z0-9_]+$/) &&
             this.state.password.length > 0 &&
             this.state.passwordCheck.length > 0 &&
-            this.state.passwordCheck == this.state.password;
+            this.state.passwordCheck === this.state.password;
     }
 });
 
 React.render(
-    <App />, 
+    <App />,
     document.getElementById('app')
 );

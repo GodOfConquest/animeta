@@ -1,0 +1,28 @@
+{
+	"env": {
+		"browser": true,
+		"node": true,
+    },
+    "globals": {
+    	"_gaq": false,
+    	"alert": false
+    },
+    "rules": {
+    	"quotes": 0,
+    	"strict": 0,
+    	"curly": 0,
+    	"camelcase": 0,
+
+    	"no-alert": 0,
+    	"no-underscore-dangle": 0,
+    },
+	"ecmaFeatures": {
+		"jsx": true,
+		"arrowFunctions": true,
+		"objectLiteralShorthandMethods": true,
+		"objectLiteralShorthandProperties": true,
+		"destructuring": true,
+		"spread": true,
+		"templateStrings": true
+    }
+}

@@ -12,7 +12,7 @@ module.exports.keyComparator = function(keyFunc) {
 
 var zerofill = module.exports.zerofill = function(n) {
     n = String(n);
-    if (n.length == 1)
+    if (n.length === 1)
         n = '0' + n;
     return n;
 };
@@ -22,16 +22,18 @@ module.exports.getTime = function(date) {
 };
 
 var HOURS = [];
-for (var h = 0; h < 24; h++) {
-    var result;
-    if (h < 12)
-        result = '오전 ' + h + '시';
-    else if (h == 12)
-        result = '정오';
-    else
-        result = '오후 ' + (h - 12) + '시';
-    HOURS[h] = result;
-}
+(function() {
+    for (var h = 0; h < 24; h++) {
+        var result;
+        if (h < 12)
+            result = '오전 ' + h + '시';
+        else if (h === 12)
+            result = '정오';
+        else
+            result = '오후 ' + (h - 12) + '시';
+        HOURS[h] = result;
+    }
+})();
 
 module.exports.formatTime = function(value) {
     var result = HOURS[value.getHours()];
@@ -81,7 +83,7 @@ exports.STATUS_TYPE_TEXT = {
 
 exports.getStatusText = function(record) {
     var status = getStatusDisplay(record);
-    if (record.status_type != 'watching' || status === '') {
+    if (record.status_type !== 'watching' || status === '') {
         var statusTypeText = exports.STATUS_TYPE_TEXT[record.status_type];
         if (status !== '') {
             status += ' (' + statusTypeText + ')';
@@ -105,7 +107,7 @@ exports.getPostDeleteURL = function(user, post) {
 };
 
 exports.SOURCE_TYPE_MAP = {
-    'manga': '만화 원작', 
+    'manga': '만화 원작',
     'original': '오리지널 작품',
     'lightnovel': '라노베 원작',
     'game': '게임 원작',

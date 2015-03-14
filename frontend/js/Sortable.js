@@ -34,7 +34,7 @@ var SortableItem = React.createClass({
     },
 
     componentDidUpdate(prevProps) {
-        if (this.state.dragging && this.props.order != prevProps.order) {
+        if (this.state.dragging && this.props.order !== prevProps.order) {
             this._remeasure();
         }
         this._manageEventListeners(this.state.dragging);

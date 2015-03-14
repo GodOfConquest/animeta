@@ -15,7 +15,7 @@ function nullslast(val) {
     return [!val, val];
 }
 
-var scheduleComparator = util.keyComparator((item) => 
+var scheduleComparator = util.keyComparator((item) =>
     nullslast(item.metadata.schedule.jp && item.metadata.schedule.jp.date)
 );
 
@@ -38,7 +38,7 @@ var scheduleStore = {
     },
 
     removeChangeListener(callback) {
-        this._listeners = this._listeners.filter(cb => cb != callback);
+        this._listeners = this._listeners.filter(cb => cb !== callback);
     },
 
     emitChange(data) {
@@ -117,7 +117,7 @@ var HeaderView = React.createClass({
             ];
         }
         var switches = options.map((option) => {
-            return <span className={this.props.ordering == option.value ? 'active' : ''}
+            return <span className={this.props.ordering === option.value ? 'active' : ''}
                 key={option.value}
                 onClick={() => scheduleStore.setOrdering(option.value)}>{option.label}</span>;
         });
@@ -303,7 +303,7 @@ var AppView = React.createClass({
 
     _onChange(data) {
         this.setState(getAppViewState());
-        if (data && data.event == 'favorite-added') {
+        if (data && data.event === 'favorite-added') {
             this.refs.notification.show(['관심 등록 완료 — ', <b>{data.title}</b>], 3000);
         }
     }

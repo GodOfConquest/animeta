@@ -15,7 +15,7 @@ function fixTitle(title) {
 
 function formatDate(t) {
     // YYYYMMDDHHMMSS
-    var d = new Date(parseInt(t.substr(0,4), 10), parseInt(t.substr(4,2), 10) - 1, parseInt(t.substr(6,2), 10));
+    var d = new Date(parseInt(t.substr(0, 4), 10), parseInt(t.substr(4, 2), 10) - 1, parseInt(t.substr(6, 2), 10));
     return d.toLocaleDateString();
 }
 
@@ -45,7 +45,7 @@ var VideoSearchResult = React.createClass({
     },
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.query != nextProps.query) {
+        if (this.props.query !== nextProps.query) {
             this.setState({
                 isLoading: true,
                 hasMore: true,
@@ -260,7 +260,7 @@ var Work = React.createClass({
     _relayout() {
         var width = $(window).width();
         var nextState = {showSidebar: width > 480};
-        if (this.state.showSidebar != nextState.showSidebar)
+        if (this.state.showSidebar !== nextState.showSidebar)
             this.setState(nextState);
     }
 });
@@ -307,7 +307,7 @@ var WorkIndex = React.createClass({
         }
         var posts = this.state.posts;
         if (this.props.excludePostID) {
-            posts = posts.filter(post => post.id != this.props.excludePostID);
+            posts = posts.filter(post => post.id !== this.props.excludePostID);
         }
         return <div>
             <VideoSearchResult query={videoQuery} />

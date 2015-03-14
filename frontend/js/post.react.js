@@ -24,7 +24,7 @@ var App = React.createClass({
                         <a href={url + '#/ep/' + ep.number + '/'}
                             className={cx({
                                 'has-post': ep.post_count > 0,
-                                'active': ep.number == PreloadData.post.status
+                                'active': ep.number === PreloadData.post.status
                             })}
                         >
                             {ep.number}화

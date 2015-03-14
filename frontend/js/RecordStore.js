@@ -2,7 +2,7 @@ var events = require('events');
 var _ = require('lodash');
 var Dispatcher = require('./Dispatcher');
 
-var _events = new events.EventEmitter;
+var _events = new events.EventEmitter();
 var _records = {};
 
 exports.addChangeListener = function(listener) {
@@ -32,15 +32,15 @@ exports.getStatusTypeStats = function() {
 exports.query = function(statusType, categoryId, sortBy) {
     var chain = _(_records);
     if (statusType) {
-        chain = chain.filter(record => record.status_type == statusType);
+        chain = chain.filter(record => record.status_type === statusType);
     }
     if (categoryId === 0 || categoryId) {
-        chain = chain.filter(record => (record.category_id || 0) == categoryId);
+        chain = chain.filter(record => (record.category_id || 0) === categoryId);
     }
     chain = chain.values();
-    if (sortBy == 'date') {
+    if (sortBy === 'date') {
         chain = chain.sortBy('created_at').reverse();
-    } else if (sortBy == 'title') {
+    } else if (sortBy === 'title') {
         chain = chain.sortBy('title');
     }
     return chain.value();
@@ -69,7 +69,7 @@ var actions = {
         var record = _records[recordID];
         record.status = post.status;
         record.status_type = post.status_type;
-        record.updated_at = +(new Date);
+        record.updated_at = Date.now();
         record.has_newer_episode = false;
         emitChange();
     },
@@ -87,7 +87,7 @@ var actions = {
     },
     removeCategory({categoryID}) {
         _.each(_records, record => {
-            if (record.category_id == categoryID)
+            if (record.category_id === categoryID)
                 record.category_id = 0;
         });
         emitChange();

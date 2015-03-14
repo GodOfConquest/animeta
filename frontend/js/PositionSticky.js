@@ -34,7 +34,7 @@ var PositionSticky = React.createClass({
 
     handleScroll() {
         var nextSticky = $(window).scrollTop() > this._offsetTop;
-        if (this.state.sticky != nextSticky) {
+        if (this.state.sticky !== nextSticky) {
             this.setState({sticky: nextSticky});
         }
     },

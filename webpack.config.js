@@ -93,24 +93,14 @@ if (process.env.NODE_ENV == 'production') {
         new ExtractTextPlugin('[name].css')
     ].concat(config.plugins);
     config.devtool = 'eval';
-    config.module.postLoaders = [
+    config.module.preLoaders = [
         {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'jshint'
+            loader: 'eslint'
         }
     ];
-    config.jshint = {
-        browser: true,
-        es3: true,
-        undef: true,
-        unused: true,
-        predef: ['_gaq', 'alert'],
-
-        // Warnings
-        "-W058": false, // new A;
-
-        // Relaxing options
-        eqnull: true
+    config.eslint = {
+    	configFile: '.eslintrc'
     };
 }

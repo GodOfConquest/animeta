@@ -1,7 +1,7 @@
 var events = require('events');
 var Dispatcher = require('./Dispatcher');
 
-var _events = new events.EventEmitter;
+var _events = new events.EventEmitter();
 var _categories = [];
 
 exports.addChangeListener = function(listener) {
@@ -30,12 +30,12 @@ var actions = {
         emitChange();
     },
     removeCategory({categoryID}) {
-        _categories = _categories.filter(c => c.id != categoryID);
+        _categories = _categories.filter(c => c.id !== categoryID);
         emitChange();
     },
     updateCategory({category}) {
         for (var i = 0; i < _categories.length; i++) {
-            if (_categories[i].id == category.id) {
+            if (_categories[i].id === category.id) {
                 _categories[i] = category;
                 emitChange();
                 return;

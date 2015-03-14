@@ -13,6 +13,6 @@ var App = React.createClass({
 });
 
 React.render(
-    <App />, 
+    <App />,
     document.getElementById('app')
 );

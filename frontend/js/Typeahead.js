@@ -12,7 +12,7 @@ function cachingSource(source, maxSize) {
     var cache = [];
     return function(q, cb) {
         for (var i = cache.length - 1; i >= 0; i--) {
-            if (cache[i][0] == q) {
+            if (cache[i][0] === q) {
                 cb(cache[i][1]);
                 return;
             }
@@ -31,6 +31,16 @@ var searchSource = cachingSource(_.throttle(function (q, cb) {
     $.getJSON('/search/', {q: q}, cb);
 }, 200), 20);
 
+var templates = {
+    suggestion: function(item) {
+        return React.renderToStaticMarkup(<div>
+            <span className="title">{item.title}</span>
+            {' '}
+            <span className="count">{item.n}명 기록</span>
+        </div>);
+    }
+};
+
 function init(node, viewOptions, sourceOptions) {
     return $(node).typeahead(viewOptions, sourceOptions);
 }
@@ -44,16 +54,6 @@ function initSuggest(node) {
         templates: templates
     });
 }
-
-var templates = {
-    suggestion: function(item) {
-        return React.renderToStaticMarkup(<div>
-            <span className="title">{item.title}</span>
-            {' '}
-            <span className="count">{item.n}명 기록</span>
-        </div>);
-    }
-};
 
 module.exports = {
     init,
