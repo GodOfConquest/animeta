@@ -1,4 +1,7 @@
 {
+    "plugins": [
+        "react"
+    ],
 	"env": {
 		"browser": true,
 		"node": true,
@@ -15,6 +18,9 @@
 
     	"no-alert": 0,
     	"no-underscore-dangle": 0,
+
+        "react/jsx-uses-react": 1,
+        "react/jsx-uses-vars": 1
     },
 	"ecmaFeatures": {
 		"jsx": true,
@@ -23,6 +29,7 @@
 		"objectLiteralShorthandProperties": true,
 		"destructuring": true,
 		"spread": true,
-		"templateStrings": true
+		"templateStrings": true,
+        "globalReturn": false
     }
 }
