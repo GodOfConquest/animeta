@@ -1,6 +1,6 @@
-/* global PreloadData */
 /* global confirm */
 var React = require('react/addons');
+var {Container} = require('flux/utils');
 var Router = require('react-router');
 var TimeAgo = require('./TimeAgo');
 var PostComposer = require('./PostComposer');
@@ -10,6 +10,7 @@ var PostActions = require('./PostActions');
 var RecordStore = require('./RecordStore');
 var PostStore = require('./PostStore');
 var CategoryStore = require('./CategoryStore');
+var ExternalServiceStore = require('./ExternalServiceStore');
 var Typeahead = require('./Typeahead');
 
 var TitleEditView = React.createClass({
@@ -152,35 +153,30 @@ var PostView = React.createClass({
     }
 });
 
-function getStoreState(recordID) {
-    return {
-        record: RecordStore.get(recordID),
-        posts: PostStore.findByRecordId(recordID)
-    };
-}
-
-var RecordDetail = React.createClass({
-    getInitialState() {
-        return {
-            ...getStoreState(this.props.recordId),
-            connectedServices: this.props.canEdit &&
-                PreloadData.current_user.connected_services
-        };
+var RecordDetail = Container.create(React.createClass({
+    statics: {
+        getStores() {
+            return [
+                RecordStore,
+                PostStore,
+                CategoryStore,
+                ExternalServiceStore
+            ];
+        },
+        calculateState(_, props) {
+            var {recordId} = props;
+            return {
+                connectedServices: ExternalServiceStore.getConnectedServices(),
+                lastPublishOptions: ExternalServiceStore.getLastPublishOptions(),
+                record: RecordStore.get(recordId),
+                posts: PostStore.findByRecordId(recordId),
+                categoryList: CategoryStore.getAll()
+            };
+        }
     },
 
     componentDidMount() {
-        RecordStore.addChangeListener(this._onChange);
-        PostStore.addChangeListener(this._onChange);
         this.loadPosts();
-    },
-
-    componentWillUnmount() {
-        RecordStore.removeChangeListener(this._onChange);
-        PostStore.removeChangeListener(this._onChange);
-    },
-
-    _onChange() {
-        this.setState(getStoreState(this.props.recordId));
     },
 
     loadPosts() {
@@ -202,7 +198,7 @@ var RecordDetail = React.createClass({
                     currentStatus={this.state.record.status}
                     initialStatusType={this.state.record.status_type}
                     connectedServices={this.state.connectedServices}
-                    onConnectedServicesChange={this._onConnectedServicesChange}
+                    initialPublishOptions={this.state.lastPublishOptions}
                     onSave={this._onSave} />
             );
         }
@@ -212,7 +208,7 @@ var RecordDetail = React.createClass({
                 recordId={this.state.record.id}
                 title={this.state.record.title}
                 categoryId={this.state.record.category_id}
-                categoryList={CategoryStore.getAll()} />
+                categoryList={this.state.categoryList} />
             {composer}
             <div className="record-detail-posts">
                 {this.state.posts.map(post => {
@@ -230,13 +226,8 @@ var RecordDetail = React.createClass({
     _onSave(post, publishOptions) {
         PostActions.createPost(this.state.record.id, post, publishOptions);
         this.props.onSave();
-    },
-
-    _onConnectedServicesChange(services) {
-        PreloadData.current_user.connected_services = services;
-        this.setState({connectedServices: services});
     }
-});
+}), {pure: false, withProps: true});
 
 var RecordDetailContainer = React.createClass({
     mixins: [Router.Navigation],
